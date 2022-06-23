@@ -169,6 +169,38 @@ var SimpleReactValidator = /*#__PURE__*/function () {
         },
         required: true
       },
+      email_accepted: {
+        message: 'The email is already registered.',
+        rule: function rule(val) {
+          return val === true;
+        },
+        required: true
+      },
+      app_accepted: {
+        message: '1 App at least must be selected',
+        rule: function rule(val) {
+          return val === true;
+        },
+        required: true
+      },
+      has_num_symbol_space: {
+        message: 'must have number, symbol, or whitespace character',
+        rule: function rule(val) {
+          return _this.helpers.testRegex(val, /^(?=.*[0-9 -!~,%@#$^*?()\{\}\[\]_~]+)/g);
+        }
+      },
+      has_lowercase: {
+        message: 'must have lowercase character',
+        rule: function rule(val) {
+          return _this.helpers.testRegex(val, /^(?=.*[a-z]+)/g);
+        }
+      },
+      has_uppercase: {
+        message: 'must have lowercase character',
+        rule: function rule(val) {
+          return _this.helpers.testRegex(val, /^(?=.*[A-Z]+)/g);
+        }
+      },
       after: {
         message: 'The :attribute must be after :date.',
         rule: function rule(val, params) {
@@ -190,13 +222,19 @@ var SimpleReactValidator = /*#__PURE__*/function () {
       alpha: {
         message: 'The :attribute may only contain letters.',
         rule: function rule(val) {
-          return _this.helpers.testRegex(val, /^[A-Z]*$/i);
+          return _this.helpers.testRegex(val, /^[a-zA-Z\u0600-\u06FF]*$/i);
         }
       },
       alpha_space: {
         message: 'The :attribute may only contain letters and spaces.',
         rule: function rule(val) {
-          return _this.helpers.testRegex(val, /^[A-Z\s]*$/i);
+          return _this.helpers.testRegex(val, /^[a-zA-Z\u0600-\u06FF\s]*$/i);
+        }
+      },
+      alpha_dash_space: {
+        message: 'The :attribute may only contain letters, dash and spaces.',
+        rule: function rule(val) {
+          return _this.helpers.testRegex(val, /^[a-zA-Z\u0600-\u06FF\s-]*$/i);
         }
       },
       alpha_num: {
@@ -353,6 +391,12 @@ var SimpleReactValidator = /*#__PURE__*/function () {
         message: 'The :attribute must be a number.',
         rule: function rule(val) {
           return _this.helpers.testRegex(val, /^\-?\d*\.?\d+$/);
+        }
+      },
+      numeric_slash_dash: {
+        message: 'The :attribute must be a number, dash and slashes only.',
+        rule: function rule(val) {
+          return _this.helpers.testRegex(val, /^[0-9\/-]*$/);
         }
       },
       phone: {
